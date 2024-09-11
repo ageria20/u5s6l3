@@ -17,7 +17,7 @@ public class BlogPost {
 
     @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
     private String category;
     private String title;

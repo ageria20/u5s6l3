@@ -43,15 +43,17 @@ public class BlogPostService {
     }
 
     public void saveBlogPost(BlogPostPayload body){
+        System.out.println("AAAAAAAAAAAAAAAAAA");
+        System.out.println(this.authorService.findAuthorById(body.getAuthorId()));
         BlogPost newBp = new BlogPost();
-        Author authorFromDb = this.authorService.findAuthorById(body.getAuthor());
-        System.out.println(authorFromDb);
+        Author authorFromDb = this.authorService.findAuthorById(body.getAuthorId());
         newBp.setCover(body.getCover());
         newBp.setTitle(body.getTitle());
         newBp.setContenuto(body.getContenuto());
         newBp.setReadingTime(body.getReadingTime());
         newBp.setAuthorId(authorFromDb);
         newBp.setCover("https://localhost:8080/" + body.getTitle());
+        System.out.println(newBp.getId());
        this.blogPostRepository.save(newBp);
 
     }

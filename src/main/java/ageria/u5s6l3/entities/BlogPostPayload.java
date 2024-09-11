@@ -14,7 +14,7 @@ public class BlogPostPayload {
     private String cover;
     private String contenuto;
     private int readingTime;
-    private UUID author;
+    private UUID authorId;
 
 
 }
