@@ -2,7 +2,10 @@ package ageria.u5s6l3.services;
 
 import ageria.u5s6l3.entities.Author;
 import ageria.u5s6l3.entities.BlogPost;
+import ageria.u5s6l3.entities.BlogPostPayload;
 import ageria.u5s6l3.exceptions.NotFoundExceptionId;
+import ageria.u5s6l3.exceptions.ValidationException;
+import ageria.u5s6l3.repositories.AuthorRepository;
 import ageria.u5s6l3.repositories.BlogPostRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Getter
@@ -22,8 +26,11 @@ public class BlogPostService {
     @Autowired
     BlogPostRepository blogPostRepository;
 
+    @Autowired
+    AuthorService authorService;
+
     public Page<BlogPost> getAllPosts(int pages, int elements, String sortBy){
-        Pageable pageable = PageRequest.of(pages, elements, Sort.Direction.valueOf(sortBy));
+        Pageable pageable = PageRequest.of(pages, elements, Sort.by(sortBy));
         return this.blogPostRepository.findAll(pageable);
     }
 
@@ -35,9 +42,17 @@ public class BlogPostService {
         return this.blogPostRepository.findById(id).orElseThrow(() -> new NotFoundExceptionId(id));
     }
 
-    public void saveBlogPost(BlogPost body){
-        body.setCover("https://localhost:8080/" + body.getTitle());
-       this.blogPostRepository.save(body);
+    public void saveBlogPost(BlogPostPayload body){
+        BlogPost newBp = new BlogPost();
+        Author authorFromDb = this.authorService.findAuthorById(body.getAuthor());
+        System.out.println(authorFromDb);
+        newBp.setCover(body.getCover());
+        newBp.setTitle(body.getTitle());
+        newBp.setContenuto(body.getContenuto());
+        newBp.setReadingTime(body.getReadingTime());
+        newBp.setAuthorId(authorFromDb);
+        newBp.setCover("https://localhost:8080/" + body.getTitle());
+       this.blogPostRepository.save(newBp);
 
     }
 

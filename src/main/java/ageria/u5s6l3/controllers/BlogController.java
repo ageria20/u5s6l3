@@ -2,6 +2,7 @@ package ageria.u5s6l3.controllers;
 
 import ageria.u5s6l3.entities.Author;
 import ageria.u5s6l3.entities.BlogPost;
+import ageria.u5s6l3.entities.BlogPostPayload;
 import ageria.u5s6l3.services.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,16 +20,13 @@ public class BlogController {
     private BlogPostService blogPostService;
 
     @GetMapping
-    public Page<Author> findAll(@RequestParam(defaultValue = "0") int pages,
+    public Page<BlogPost> findAll(@RequestParam(defaultValue = "0") int pages,
                                 @RequestParam(defaultValue = "10") int elements,
                                 @RequestParam(defaultValue = "id") String sortBy){
         return this.blogPostService.getAllPosts(pages, elements, sortBy);
     }
 
-    @GetMapping()
-    public List<BlogPost> getPosts(){
-        return blogPostService.findAll();
-    }
+
 
     @GetMapping("/{bloPostId}")
     public BlogPost findyById(@PathVariable UUID blogPostId){
@@ -37,7 +35,7 @@ public class BlogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BlogPost createBloPost(@RequestBody BlogPost body){
+    public BlogPostPayload createBloPost(@RequestBody BlogPostPayload body){
         blogPostService.saveBlogPost(body);
         return body;
     }

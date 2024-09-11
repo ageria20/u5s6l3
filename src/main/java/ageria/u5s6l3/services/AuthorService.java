@@ -30,9 +30,11 @@ public class AuthorService {
         return this.authorRepository.findAll();
     }
    public Page<Author> getAllAuthors(int pages, int elements, String sortBy){
-       Pageable pageable = PageRequest.of(pages, elements, Sort.Direction.valueOf(sortBy));
+       Pageable pageable = PageRequest.of(pages, elements, Sort.by(sortBy));
        return this.authorRepository.findAll(pageable);
    }
+
+
 
 
     public void saveAuthor(Author body){
