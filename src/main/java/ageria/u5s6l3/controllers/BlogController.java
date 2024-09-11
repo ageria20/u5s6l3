@@ -43,8 +43,7 @@ public class BlogController {
     @PutMapping("/{bloPostId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BlogPost editBlogPost(@PathVariable UUID blogPostId, @RequestBody BlogPost body){
-        blogPostService.updateBlogPost(blogPostId,body);
-        return body;
+        return blogPostService.updateBlogPost(blogPostId,body);
     }
 
     @DeleteMapping("/{blogPostId}")

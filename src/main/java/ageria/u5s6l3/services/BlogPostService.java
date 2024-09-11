@@ -65,11 +65,12 @@ public class BlogPostService {
         BlogPost found = this.findPostById(blogPostId);
 
 
-                found.setCover("https://localhost:8080/" + body.getTitle());
-                found.setTitle(body.getTitle());
-                found.setCategory(body.getCategory());
-                found.setContenuto(found.getContenuto());
-                found.setReadingTime(body.getReadingTime());
+        found.setCover("https://localhost:8080/" + body.getTitle());
+        found.setTitle(body.getTitle());
+        found.setCategory(body.getCategory());
+        found.setContenuto(found.getContenuto());
+        found.setReadingTime(body.getReadingTime());
+        found.setAuthor(body.getAuthor());
 
         return found;
     }
