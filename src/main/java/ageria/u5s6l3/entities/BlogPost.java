@@ -17,7 +17,7 @@ public class BlogPost {
 
     @Setter(AccessLevel.NONE)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
     private String category;
     private String title;
@@ -27,5 +27,5 @@ public class BlogPost {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private Author authorId;
+    private Author author;
 }

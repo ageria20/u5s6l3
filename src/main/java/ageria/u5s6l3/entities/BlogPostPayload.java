@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class BlogPostPayload {
-    private UUID id;
+
     private String category;
     private String title;
     private String cover;

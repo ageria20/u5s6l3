@@ -35,9 +35,9 @@ public class BlogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BlogPostPayload createBloPost(@RequestBody BlogPostPayload body){
-        blogPostService.saveBlogPost(body);
-        return body;
+    public BlogPost createBloPost(@RequestBody BlogPostPayload body){
+       return blogPostService.saveBlogPost(body);
+
     }
 
     @PutMapping("/{bloPostId}")

@@ -44,8 +44,7 @@ public class AuthorService {
     }
 
     public Author findByIdAndUpdate(UUID id, Author body){
-        Author found = this.findAuthorById(id);
-
+            Author found = this.findAuthorById(id);
                 found.setName(body.getName());
                 found.setSurname(body.getSurname());
                 found.setEmail(body.getEmail());

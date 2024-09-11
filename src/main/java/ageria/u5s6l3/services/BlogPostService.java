@@ -42,19 +42,22 @@ public class BlogPostService {
         return this.blogPostRepository.findById(id).orElseThrow(() -> new NotFoundExceptionId(id));
     }
 
-    public void saveBlogPost(BlogPostPayload body){
-        System.out.println("AAAAAAAAAAAAAAAAAA");
-        System.out.println(this.authorService.findAuthorById(body.getAuthorId()));
-        BlogPost newBp = new BlogPost();
+    public BlogPost saveBlogPost(BlogPostPayload body){
+//        System.out.println("AAAAAAAAAAAAAAAAAA");
+//        System.out.println(this.authorService.findAuthorById(body.getAuthorId()));
         Author authorFromDb = this.authorService.findAuthorById(body.getAuthorId());
-        newBp.setCover(body.getCover());
+
+
+        BlogPost newBp = new BlogPost();
         newBp.setTitle(body.getTitle());
         newBp.setContenuto(body.getContenuto());
         newBp.setReadingTime(body.getReadingTime());
-        newBp.setAuthorId(authorFromDb);
+        newBp.setAuthor(authorFromDb);
+        newBp.setCategory(body.getCategory());  // Ensure category is set
         newBp.setCover("https://localhost:8080/" + body.getTitle());
-        System.out.println(newBp.getId());
-       this.blogPostRepository.save(newBp);
+;
+
+        return this.blogPostRepository.save(newBp);
 
     }
 
