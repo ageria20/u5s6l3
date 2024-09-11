@@ -1,14 +1,16 @@
 package ageria.u5s6l3.controllers;
 
 
-import ageria.u5s5l2.entities.Author;
-import ageria.u5s5l2.entities.BlogPost;
-import ageria.u5s5l2.services.AuthorService;
+import ageria.u5s6l3.entities.Author;
+import ageria.u5s6l3.entities.BlogPost;
+import ageria.u5s6l3.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/author")
@@ -17,33 +19,39 @@ public class AuthorController {
     @Autowired
     AuthorService authorService;
 
+
+
     @GetMapping
-    public List<Author> findAll(){
-        return authorService.getAuthorList();
+    public Page<Author> findAll(@RequestParam(defaultValue = "0") int pages,
+                                @RequestParam(defaultValue = "10") int elements,
+                                @RequestParam(defaultValue = "id") String sortBy){
+        return this.authorService.getAllAuthors(pages, elements, sortBy);
     }
 
     @GetMapping("/{authorId}")
-    public Author findyById(@PathVariable int authorId){
+    public Author findyById(@PathVariable UUID authorId){
         return authorService.findAuthorById(authorId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createAuthor(@RequestBody Author body){
+    public Author createAuthor(@RequestBody Author body){
         authorService.saveAuthor(body);
-        return "AUTHOR CREATED";
+        return body;
     }
+
+
 
     @PutMapping("/{authorId}")
     @ResponseStatus(HttpStatus.OK)
-    public String updateAuthor(@PathVariable int authorId, @RequestBody Author body){
+    public Author updateAuthor(@PathVariable UUID authorId, @RequestBody Author body){
         authorService.findByIdAndUpdate(authorId, body);
-        return "AUTHRO UPDATED";
+        return body;
     }
 
     @DeleteMapping("/{authorId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteAuthor(@PathVariable int authorId){
+    public String deleteAuthor(@PathVariable UUID authorId){
         authorService.findByIdAndDelete(authorId);
         return "AUTHOR DELETED";
     }
